@@ -15,15 +15,6 @@ const App = () => {
   useEffect = (() => {
     const gettodos = async () =>{
       try{
-        const todolist = await axios.get("http://localhost:8080/todos");
-        if (todolist) {
-          const todos = await todolist.json();
-          settodos(todos);
-          console.log(todos);
-        }
-        else{
-          console.log('error in fetch data')
-        }
       }
       catch (err){
         console.log('error in fetch api')
