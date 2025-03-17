@@ -13,7 +13,7 @@ const App = () => {
 
   const getTodos = async () => {
     try {
-      const {data} = await axios.get('http://localhost:8080/todos');
+      const { data } = await axios.get('http://localhost:8080/todos');
       setTodos(data);
     } catch (error) {
       console.error('Error fetching todos:', error);
@@ -31,25 +31,25 @@ const App = () => {
   const taskSave = async (e) => {
     e.preventDefault();
     // if (task.trim() !== "") {
-      try {
-        
-          await axios.post('http://localhost:8080/todos', { task, status: false,  });
-          setTask(""); 
-          getTodos(); 
-        
-      
-      } catch (error) {
-        console.error("Error saving todo:", error);
-      }
+    try {
+
+      await axios.post('http://localhost:8080/todos', { task, status: false, });
+      setTask("");
+      getTodos();
+
+
+    } catch (error) {
+      console.error("Error saving todo:", error);
+    }
     // }
   };
 
-  
+
   const taskDelete = async (id) => {
     try {
-    
+
       await axios.delete(`http://localhost:8080/todos/${id}`);
-      getTodos(); 
+      getTodos();
     } catch (error) {
       console.error("Error deleting todo:", error);
     }
@@ -68,27 +68,27 @@ const App = () => {
     }
   };
 
-  
+
   const updatetask = async (id, task) => {
     if (task.trim() !== "") {
-      setTaskUpdate({isUpdate:true,id:id,task:task})
+      setTaskUpdate({ isUpdate: true, id: id, task: task })
       const selectTask = await axios.get(`http://localhost:8080/todos/${id}`)
-      if(selectTask.status == 200){
+      if (selectTask.status == 200) {
         setTask(selectTask.data.task);
-      }else{
+      } else {
         console.log('error')
       }
     }
   };
-  
-  const updateSingleTask = async (id,task) => {
+
+  const updateSingleTask = async (id, task) => {
     try {
-     
+
       const taskUpdate = await axios.patch(`http://localhost:8080/todos/${id}`, {
         task: task
       });
 
-      if(taskUpdate.status == 200) {
+      if (taskUpdate.status == 200) {
         console.log("Task Updated")
         setTaskUpdate({
           isUpdate: false,
@@ -96,17 +96,17 @@ const App = () => {
           task: ""
         })
         getTodos();
-      }else{
+      } else {
         console.log("error")
       }
- 
+
     } catch (error) {
       console.error("Error updating todo:", error);
     }
   }
 
   const handleUpdateTask = (event) => {
-    const {value} = event.target;
+    const { value } = event.target;
     setTaskUpdate({
       ...taskUpdate,
       task: value
@@ -130,35 +130,35 @@ const App = () => {
               key={_id}
               style={{
                 width: "600px",
-                margin:"auto",
+                margin: "auto",
                 display: "flex",
-                justifyContent:"space-between",
+                justifyContent: "space-between",
                 alignItems: "center",
                 gap: "10px",
               }}
             >
               <input
                 type="checkbox"
-                checked= {status}
-                onChange={() => completetask(_id, status)} 
+                checked={status}
+                onChange={() => completetask(_id, status)}
               />
               {
                 taskUpdate.isUpdate && _id == taskUpdate.id ?
-                <>
-                <input type="text" onChange={handleUpdateTask} value={taskUpdate.task} />
-                <button onClick={()=>updateSingleTask(taskUpdate.id,taskUpdate.task)}>update</button>
-                </>
-                :
+                  <>
+                    <input type="text" onChange={handleUpdateTask} value={taskUpdate.task} />
+                    <button onClick={() => updateSingleTask(taskUpdate.id, taskUpdate.task)}>update</button>
+                  </>
+                  :
 
-              <p className="task"  style={{ textDecoration: status ? "line-through" : "none" } }>
-                {task}
-                </p>
+                  <p className="task" style={{ textDecoration: status ? "line-through" : "none" }}>
+                    {task}
+                  </p>
               }
-            
+
               <button onClick={() => taskDelete(_id)} style={{ width: "150px", height: "30px" }}>
                 Delete
               </button>
-              <button disabled={status?"false":""} style={{width: "150px", height: "30px" }} onClick={()=>updatetask(_id,task)} >
+              <button disabled={status ? "false" : ""} style={{ width: "150px", height: "30px" }} onClick={() => updatetask(_id, task)} >
                 Edit
               </button>
             </li>

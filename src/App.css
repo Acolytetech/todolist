@@ -19,19 +19,16 @@ form input{
 form button{
   width: 200px;
 }
-ul{
-
-}
 ul li{
 
   text-align: center;
   outline: auto;
-padding:  10px 20px;
+padding:  0px 20px;
 margin-bottom:20px !important;
 }
 li .task{
 width: 400px;
 text-align: left;
 border: none;
-outline: none;
+/* outline: none; */
 }
