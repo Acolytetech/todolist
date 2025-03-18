@@ -71,10 +71,11 @@ const App = () => {
 
   const updatetask = async (id, task) => {
     if (task.trim() !== "") {
-      setTaskUpdate({ isUpdate: true, id: id, task: task })
       const selectTask = await axios.get(`http://localhost:8080/todos/${id}`)
       if (selectTask.status == 200) {
-        setTask(selectTask.data.task);
+        // setTask(selectTask.data.task);
+      setTaskUpdate({ isUpdate: true, id: id, task: task })
+
       } else {
         console.log('error')
       }
