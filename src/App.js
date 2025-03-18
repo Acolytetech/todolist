@@ -85,9 +85,7 @@ const App = () => {
   const updateSingleTask = async (id, task) => {
     try {
 
-      const taskUpdate = await axios.patch(`http://localhost:8080/todos/${id}`, {
-        task: task
-      });
+      const taskUpdate = await axios.patch(`http://localhost:8080/todos/${id}`, {task: task});
 
       if (taskUpdate.status == 200) {
         console.log("Task Updated")
@@ -146,7 +144,7 @@ const App = () => {
               {
                 taskUpdate.isUpdate && _id == taskUpdate.id ?
                   <>
-                    <input type="text" onChange={handleUpdateTask} value={taskUpdate.task} />
+                    <input className="updatefield" type="text" onChange={handleUpdateTask} value={taskUpdate.task} />
                     <button onClick={() => updateSingleTask(taskUpdate.id, taskUpdate.task)}>update</button>
                   </>
                   :
